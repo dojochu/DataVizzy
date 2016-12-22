@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+
+<title> Sleep Meister Analysis </title>
+<meta charset="utf-8">
+
+
+<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../bootstrap-3.3.7-dist/css/carousel.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css" >
+
+
+<style> 
+
+div.bar {
+		display:inline-block;
+		width: 100px;
+		height:10px;
+		background-color: #000000;
+		border: solid 5px #068F86;
+		border-bottom: solid 0px;
+		margin-right: 5px;
+		-webkit-transition: all 0.3s ease;
+		-moz-transition: all 0.3s ease;
+		-o-transition: all 0.3s ease;
+		-ms-transition: all 0.3s ease;
+		
+	}
+div.bar:hover{
+		border-width: 5px;
+		border-color:#FCB03C;
+		border-bottom: solid 0px;
+		}
+
+
+ </style>
+
+</head>
+
+<body>
+
+<div class="navbar-wrapper">
+	<div class="container">
+
+		<nav class="navbar navbar-inverse navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<p class="navbar-brand" style="text-decoration:none">Insights For Data Visualization </p>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="../index.html">Home</a></li>
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">VizDemo <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li class="active"><a href="../globe/globe.html">Globe</a></li>
+								<li><a href="../parallel/parallel.html">Parallel</a></li>
+								<li><a href="../sleep/sleep.html">Sleep</a></li>
+
+							</ul>
+						</li>
+						<li><a href="#VizBlog">VizBlog</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> About <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="../about/datavizzy.html">About Data Vizzy</a></li>
+								<li><a href="../about/creator.html">Creator</a></li>
+								<li><a href="../about/contact.html">Contact</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	</div>
+</div>
+
+
+<script src="lib/d3/d3.js"></script>
+<script src="lib/d3/d3.tip.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="sleep/lib/jquery.js"><\/script>')</script>
+<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+<script>
+
+var w = 2000;
+var h = 1000;
+var dataset = [1,2,3,4,5];
+var dataset2 = [5,2,4,3,1];
+
+var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
+
+svg.selectAll("rect")
+	.data(dataset)
+	.enter()
+	.append("rect")
+		.attr("x", function(d,i){ return 100 + i*150})
+		.attr("y", function(d){return h*0.3-d*50})
+		.attr("width", 100)
+		.attr("height", function(d){ return d*50 })
+		.attr("fill", "blue")
+		.attr("stroke", "blue")
+		.attr("stroke-width", 5);
+		
+svg.selectAll("circle")
+	.data(dataset2)
+	.enter()
+	.append("circle")
+	.attr("cx", function(d, i){ return i*100+100 } )
+	.attr("cy", h*0.5)
+	.attr("r", function(d){ return d*10})
+	.attr("fill", "blue")
+	.attr("stroke", "yellow")
+	.attr("stroke-width", function(d){return d*10/3});
+
+
+	
+</script>
+
+
+
+</body>
+
+
+
+
+
+
+</html>

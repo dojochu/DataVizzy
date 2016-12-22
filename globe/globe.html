@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>WebGL Globe</title>
+    <meta charset="utf-8">
+    <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap-3.3.7-dist/css/carousel.css" rel="stylesheet">
+    <style type="text/css">
+      html {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000000 url(skins/loading.gif) center center no-repeat;
+        color: #ffffff;
+        font-family: sans-serif;
+        font-size: 13px;
+        line-height: 20px;
+        height: 100%;
+      }
+
+      #info {
+
+        font-size: 11px;
+        position: absolute;
+        bottom: 5px;
+        background-color: rgba(0,0,0,0.8);
+        border-radius: 3px;
+        right: 10px;
+        padding: 10px;
+
+      }
+
+      #currentInfo {
+        width: 180px;
+		
+		text-align:center;
+        position: absolute;
+        left: 20px;
+        top: 130px;
+
+        background-color: rgba(0,0,0,0.8);
+
+        border-top: 5px solid rgba(255,255,255,0.4);
+        padding: 10px;
+      }
+
+      a {
+        color: #aaa;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .bull {
+        padding: 0 5px;
+        color: #555;
+      }
+
+      #title {
+        position: absolute;
+        top: 100px;
+        width: 180px;
+        left: 20px;
+        background-color: rgba(0,0,0,0.6);
+        border-radius: 3px;
+        font: 20px Georgia;
+        padding: 10px;
+		text-align:center;
+      }
+
+      .year {
+        font: 16px Georgia;
+        line-height: 26px;
+        height: 30px;
+        text-align: center;
+        float: left;
+        width: 180px;
+        height: 50px;
+        color: rgba(255, 255, 255, 0.4);
+
+        cursor: pointer;
+        -webkit-transition: all 0.1s ease-out;
+      }
+
+      .year:hover, .year.active {
+        font-size: 23px;
+        color: #fff;
+      }
+      
+      
+      #mousebox {
+        width: 107px;
+        height: 55px;
+        display: block;
+        position: absolute;
+        bottom: 15px;
+        left: 100px;
+        background-color: rgba(0,0,0,0.2)
+        }
+        
+        .position {
+            font: 8px Georgia;
+            line-height: 26px;
+            height: 30px;
+            text-align: center;
+            float: left;
+            width: 90px;
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            -webkit-transition: all 0.1s ease-out;
+        }
+        
+        
+      #ce span {
+        display: none;
+      }
+
+      #ce {
+        width: 107px;
+        height: 55px;
+        display: block;
+        position: absolute;
+
+        bottom: 80px;
+        left: 20px;
+		opacity:0.6;
+      }
+	  #ce:hover {
+		opacity:0.9;
+	  }
+
+        bottom: 15px;
+        left: 20px;
+        background: url(skins/ce.png);
+      }
+
+      
+
+    </style>
+  </head>
+  <body>
+
+  <div class="navbar-wrapper" >
+    <div class="container">
+
+      <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <p class="navbar-brand" style="text-decoration:none">Kao Data Visualization </p>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/index.html">Home</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">VizDemo <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/globe/globe.html">Globe</a></li>
+                  <li><a href="/parallel/parallel.html">Parallel</a></li>
+                  <li><a href="/sleep/sleep.html">Sleep</a></li>
+
+                </ul>
+              </li>
+              <li><a href="/vrview/vrview.html">360 Media</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> About <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/about/datavizzy.html">About Data Vizzy</a></li>
+                  <li><a href="/about/creator.html">Creator</a></li>
+                  <li><a href="/about/contact.html">Contact</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+
+
+
+  <div id="container"></div>
+
+
+
+  <div id="info">
+    <strong><a href="http://www.chromeexperiments.com/globe">Google's WebGL Globe application</a></strong> <span class="bull">&bull;</span>�Created by Stephanie Hsuan Kao <span class="bull">&bull;</span> Data acquired from <a href="http://www.start.umd.edu/gtd/">GTD Global Terrorism Database</a>
+  </div>
+  <div id="title">
+    World Terrorism
+  </div>
+
+    
+  <div id="currentInfo">
+    <span id="yearAll"  class="year">All </span> 
+    <span id="year1970" class="year">1970</span>
+    <span id="year1980" class="year">1980<br></span>
+    <span id="year1990" class="year">1990</span>
+    <span id="year2000" class="year">2000</span>
+    <span id="year2010" class="year">2010</span>
+  </div>  
+
+
+
+
+  <a id="ce" href="http://www.chromeexperiments.com/globe">
+    <span> This is a Chrome Experiment 
+</span>
+
+  </a>
+    
+    
+<!--        
+
+<div id="mousebox">
+    <span id="X" class="position">X</span>
+    <span id="Y" class="position">Y</span>
+  </div>
+            var isIE = document.all?true:false; 
+            if (!isIE) document.captureEvents(Event.MOUSEMOVE);
+            var positionX = document.getElementById('positionX')
+            var positionY = document.getElementById('positionY')
+            document.onmousemove = getMousePosition;
+    
+            function getMousePosition(mp) {
+        	  var _x;
+	          var _y;
+	         if (!isIE) {
+		          _x = mp.pageX;
+		          _y = mp.pageY;
+	           }
+            if (isIE) {
+		          _x = event.clientX + document.body.scrollLeft;
+		          _y = event.clientY + document.body.scrollTop;
+	        }
+            document.position.x.value=_x;
+            document.position.y.value=_y;
+            return true;
+	       }	-->
+     
+<!--<form name=thisform>
+<table border=0>
+<tr><td colspan=2>Position Of Cursor</td></tr>
+<tr><td>X <input type=text name=x value=""></td>
+    <td>Y <input type=text name=y value=""></td>
+</tr>
+</table>
+</form> -->
+
+  <script type="text/javascript" src="third-party/Three/ThreeWebGL.js"></script>
+  <script type="text/javascript" src="third-party/Three/ThreeExtras.js"></script>
+  <script type="text/javascript" src="third-party/Three/RequestAnimationFrame.js"></script>
+  <script type="text/javascript" src="third-party/Three/Detector.js"></script>
+  <script type="text/javascript" src="third-party/Tween.js"></script>
+  <script type="text/javascript" src="globe_struct.js"></script>
+  <script type="text/javascript">
+  
+  
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+
+      var years = ['All', '1970','1980','1990','2000', '2010'];
+      var container = document.getElementById('container');
+      
+      var globe = new DAT.Globe(container);
+      console.log(globe);
+      var i, tweens = [];
+
+      var settime = function(globe, t) {
+        return function() {
+          new TWEEN.Tween(globe).to({time: t/years.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+          var y = document.getElementById('year'+years[t]);
+          if (y.getAttribute('class') === 'year active') {
+            return;
+          }
+          var yy = document.getElementsByClassName('year');
+          for(i=0; i<yy.length; i++) {
+            yy[i].setAttribute('class','year');
+          }
+          y.setAttribute('class', 'year active');
+        };
+      };
+            
+      for(var i = 0; i<years.length; i++) {
+        var y = document.getElementById('year'+years[i]);
+        y.addEventListener('mouseover', settime(globe,i), false);
+      }
+
+      var xhr;
+      TWEEN.start();
+
+
+      xhr = new XMLHttpRequest();
+      xhr.open('GET', 'data/gtd_decade_globedata.json', true);
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var data = JSON.parse(xhr.responseText);
+            window.data = data;
+            for (i=0;i<data.length;i++) {
+              globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
+            }
+            globe.createPoints();
+            settime(globe,0)();
+            globe.animate();
+            
+          }
+        }
+      };
+      
+        
+        
+      xhr.send(null);
+    }
+          
+    
+   
+
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/sleep/lib/jquery.js"><\/script>')</script>
+    <script src="/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>
